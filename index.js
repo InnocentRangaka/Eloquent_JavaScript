@@ -1,3 +1,5 @@
+import()
+
 const scale = 10;
 const startState = {
   tool: "draw",
