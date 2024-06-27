@@ -1,3 +1,5 @@
+import { elt } from './scripts/picture.js'
+
 export class PictureCanvas {
   constructor(picture, pointerDown) {
     this.picture = picture;

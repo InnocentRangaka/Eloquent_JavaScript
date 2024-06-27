@@ -1,3 +1,6 @@
+import {drawPicture} from './scripts/pictureCanvas.js'
+import { Picture, elt } from './scripts/picture.js'
+
 export class ToolSelect {
   constructor(state, { dispatch }) {
     this.select = elt("select", {

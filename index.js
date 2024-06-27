@@ -1,7 +1,7 @@
-import {PictureCanvas, drawPicture, pointerPosition} from './scripts/pictureCanvas.js'
-import { Picture, updateState, elt } from './scripts/picture.js'
-import {draw, rectangle, fill} from './scripts/drawing.js'
-import {ToolSelect, ColorSelect, SaveButton, LoadButton, startLoad, finishLoad, pictureFromImage, UndoButton } from './scripts/controls.js'
+import { PictureCanvas } from './scripts/pictureCanvas.js'
+import { Picture, elt } from './scripts/picture.js'
+import { draw, rectangle, fill } from './scripts/drawing.js'
+import { ToolSelect, ColorSelect, SaveButton, LoadButton, UndoButton } from './scripts/controls.js'
 
 const scale = 10;
 const startState = {
