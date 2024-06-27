@@ -71,3 +71,4 @@ class PixelEditor {
     return app.dom;
   }
   
+  document.body.appendChild(startPixelEditor({}));

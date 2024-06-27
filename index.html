@@ -20,42 +20,6 @@
       <button id="undo">Undo</button>
     </div>
 
-    <script>
-      let state = {
-        tool: "pencil",
-        color: "#000000",
-        picture: [],
-        history: [],
-      };
-
-      function updateState(newState) {
-        Object.assign(state, newState);
-        // Redraw the interface
-      }
-
-      document.getElementById("tool").addEventListener("change", (e) => {
-        updateState({ tool: e.target.value });
-      });
-
-      document.getElementById("color").addEventListener("change", (e) => {
-        updateState({ color: e.target.value });
-      });
-
-      document.getElementById("canvas").addEventListener("mousedown", (e) => {
-        // Handle drawing based on the selected tool
-      });
-
-      document.getElementById("save").addEventListener("click", () => {
-        // Handle saving the picture
-      });
-
-      document.getElementById("load").addEventListener("change", (e) => {
-        // Handle loading a picture
-      });
-
-      document.getElementById("undo").addEventListener("click", () => {
-        // Handle undo
-      });
-    </script>
+    <script type="module" src="./index.js"></script>
   </body>
 </html>
