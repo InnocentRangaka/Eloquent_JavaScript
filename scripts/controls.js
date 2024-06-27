@@ -1,5 +1,8 @@
-import {drawPicture} from './scripts/pictureCanvas.js'
-import { Picture, elt } from './scripts/picture.js'
+import {drawPicture} from './pictureCanvas.js'
+import { Picture, elt } from './picture.js'
+import { draw, rectangle, fill, pick } from './drawing.js'
+
+export const baseTools = { draw, fill, rectangle, pick };
 
 export class ToolSelect {
   constructor(state, { dispatch }) {

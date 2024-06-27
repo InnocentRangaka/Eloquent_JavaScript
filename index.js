@@ -1,9 +1,8 @@
 import { PictureCanvas } from './scripts/pictureCanvas.js'
 import { Picture, elt } from './scripts/picture.js'
-import { draw, rectangle, fill } from './scripts/drawing.js'
-import { ToolSelect, ColorSelect, SaveButton, LoadButton, UndoButton } from './scripts/controls.js'
+import { baseTools, ToolSelect, ColorSelect, SaveButton, LoadButton, UndoButton } from './scripts/controls.js'
+import { draw, rectangle, fill, pick } from './scripts/drawing.js'
 
-const scale = 10;
 const startState = {
   tool: "draw",
   color: "#000000",
@@ -12,7 +11,6 @@ const startState = {
   doneAt: 0
 };
 
-const baseTools = { draw, fill, rectangle, pick };
 const baseControls = [ToolSelect, ColorSelect, SaveButton, LoadButton, UndoButton];
 
 function historyUpdateState(state, action) {
@@ -37,43 +35,53 @@ function historyUpdateState(state, action) {
 }
 
 class PixelEditor {
-    constructor(state, config) {
-      let { tools, controls, dispatch } = config;
-      this.state = state;
-  
-      this.canvas = new PictureCanvas(state.picture, pos => {
-        let tool = tools[this.state.tool];
-        let onMove = tool(pos, this.state, dispatch);
-        if (onMove) return pos => onMove(pos, this.state);
-      });
-  
-      this.controls = controls.map(
-        Control => new Control(state, config)
-      );
-  
-      this.dom = elt("div", {}, this.canvas.dom, elt("br"),
-        ...this.controls.reduce(
-          (a, c) => a.concat(" ", c.dom), []
-        ));
-    }
-  
-    syncState(state) {
-      this.state = state;
-      this.canvas.syncState(state.picture);
-      for (let ctrl of this.controls) ctrl.syncState(state);
-    }
-  }
-  
-  function startPixelEditor({ state = startState, tools = baseTools, controls = baseControls }) {
-    let app = new PixelEditor(state, {
-      tools,
-      controls,
-      dispatch(action) {
-        state = historyUpdateState(state, action);
-        app.syncState(state);
-      }
+  constructor(state, config) {
+    let { tools, controls, dispatch } = config;
+    this.state = state;
+
+    this.canvas = new PictureCanvas(state.picture, pos => {
+      let tool = tools[this.state.tool];
+      let onMove = tool(pos, this.state, dispatch);
+      if (onMove) return pos => onMove(pos, this.state);
     });
-    return app.dom;
+
+    this.controls = controls.map(
+      Control => new Control(state, config)
+    );
+
+    this.dom = elt("div", {}, this.canvas.dom, elt("br"),
+      ...this.controls.reduce(
+        (a, c) => a.concat(" ", c.dom), []
+      ));
   }
-  
-  document.body.appendChild(startPixelEditor({}));
+
+  syncState(state) {
+    this.state = state;
+    this.canvas.syncState(state.picture);
+    for (let ctrl of this.controls) ctrl.syncState(state);
+  }
+}
+
+function startPixelEditor({ state = startState, tools = baseTools, controls = baseControls }) {
+  let app = new PixelEditor(state, {
+    tools,
+    controls,
+    dispatch(action) {
+      state = historyUpdateState(state, action);
+      app.syncState(state);
+    }
+  });
+
+  return app.dom;
+}
+
+const pixelEditorElement = document.body.querySelector("#PixelEditor")
+
+pixelEditorElement.appendChild(startPixelEditor({}));
+const canvasElement = pixelEditorElement.querySelector('canvas');
+canvasElement.setAttribute('width', '600px');
+canvasElement.setAttribute('height', '300px');
+canvasElement.setAttribute('style', 'color: #f0f0f0');
+
+
+////////////// Testing /////////////////////////

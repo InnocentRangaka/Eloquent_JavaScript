@@ -23,6 +23,9 @@ export function rectangle(start, state, dispatch) {
   drawRectangle(start);
 }
 
+const around = [{dx: -1, dy: 0}, {dx: 1, dy: 0},
+  {dx: 0, dy: -1}, {dx: 0, dy: 1}];
+
 export function fill({ x, y }, state, dispatch) {
   let targetColor = state.picture.pixel(x, y);
   if (targetColor == state.color) return;
